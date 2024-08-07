@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import {
   Routes,
   Route,
@@ -9,9 +9,8 @@ import routes from './routes';
 import './css/style.css';
 
 import './charts/ChartjsConfig';
+import FullPageLoader from './components/FullPageLoader/FullPageLoader';
 
-// Import pages
-import Dashboard from './pages/Dashboard';
 
 function App() {
 
@@ -25,11 +24,13 @@ function App() {
 
   return (
     <>
+    <Suspense fallback={<FullPageLoader/>}>
       <Routes>
         {routes.map((route,index) => (
         <Route key={index} path={route.path} element={<route.layout><route.element/></route.layout>} />
         ))}
       </Routes>
+      </Suspense>
     </>
   );
 }
