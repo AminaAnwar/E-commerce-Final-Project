@@ -7,7 +7,7 @@ const { create, list, edit, deleteCategory} = require("../../controllers/admin/c
 
 router.post("/add",upload.single("image"),create)
 router.get("/list", list)
-router.put("/edit/:id", edit)
+router.put("/edit/:id",upload.single("image"), edit)
 router.delete("/delete/:id", deleteCategory)
 
 module.exports = router

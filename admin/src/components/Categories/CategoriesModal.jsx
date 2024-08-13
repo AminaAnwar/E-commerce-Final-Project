@@ -9,11 +9,7 @@ import {CKEditor} from "@ckeditor/ckeditor5-react"
 import Switch from 'react-switch';
 
 function CategoriesModal({ showModal, handleClose }) {
-  const [status, setStatus] = useState(false);
-
-  const handleStatusChange = (checked) => {
-    setStatus(checked);
-  };
+ 
 
   return (
     <Modal show={showModal} onHide={handleClose}>

@@ -40,7 +40,7 @@ exports.login = async(req,res) => {
         return res.send({status: false, messgae: "Invalid Credentials"})
     }
 
-    const token = jwt.sign({id: existingAdmin._id}, secretKey, { expiresIn: '1h' })
+    const token = jwt.sign({id: existingAdmin._id}, secretKey, { expiresIn: '12h' })
     return res.send({status: true, message: "Admin logged in successfully", data: {token,existingAdmin}})
 
 
