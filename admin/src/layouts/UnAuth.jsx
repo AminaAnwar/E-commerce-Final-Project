@@ -1,8 +1,8 @@
 import React from 'react'
 
-function UnAuth() {
+function UnAuth({children}) {
   return (
-    <div>UnAuth</div>
+    <div>{children}</div>
   )
 }
 

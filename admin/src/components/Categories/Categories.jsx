@@ -16,7 +16,7 @@ function Categories() {
         <Button variant="primary" onClick={()=>{setType(1);setShowModal(true)}}>Add Category</Button>
       </div>
       
-      {/* <Table striped bordered hover>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
@@ -36,7 +36,7 @@ function Categories() {
             </td>
           </tr>
         </tbody>
-      </Table> */}
+      </Table>
 
         <CategoriesModal type={type} showModal={showModal} setShowModal={setShowModal}/>
 
