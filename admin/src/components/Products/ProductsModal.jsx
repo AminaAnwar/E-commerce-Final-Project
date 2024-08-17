@@ -8,25 +8,23 @@ import {CKEditor} from "@ckeditor/ckeditor5-react"
 
 import Switch from 'react-switch';
 
-function CategoriesModal({ showModal, setShowModal }) {
- 
+function ProductsModal({ showModal, setShowModal }) {
 
   return (
     <Modal show={showModal} onHide={()=>setShowModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Add Category</Modal.Title>
+        <Modal.Title>Add Product</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           initialValues={{
             title: '',
             description: '',
-            image: null,
-            status: false,
+            price: 0,
+            images: null,
+            featured: false,
           }}
-          onSubmit={(values) => {
-            console.log(values, "Values")
-           
+          onSubmit={(values) => {           
             setShowModal(false)
           }}
         >
@@ -40,7 +38,6 @@ function CategoriesModal({ showModal, setShowModal }) {
                   placeholder="Enter title"
                 />
               </Form.Group>
-
               <Form.Group controlId="formDescription" className="mt-3">
                 <Form.Label>Description</Form.Label>
                 <CKEditor
@@ -49,28 +46,55 @@ function CategoriesModal({ showModal, setShowModal }) {
                 onChange={(event, editor )=>setFieldValue('description', editor.getData())}
                 />
               </Form.Group>
+              <Form.Group controlId="formTitle">
+                <Form.Label>Price</Form.Label>
+                <Field
+                  name="price"
+                  type="number"
+                  className="form-control"
+                />
+              </Form.Group>
               <Form.Group controlId="formStatus" className="mt-3 d-flex align-items-center">
-                <Form.Label className="me-3">Status</Form.Label>
+                <Form.Label className="me-3">Featured</Form.Label>
                 <Switch
-                  checked={values.status}
-                  onChange={(checked) => setFieldValue('status', checked)}
+                  checked={values.featured}
+                  onChange={(checked) => setFieldValue('featured', checked)}
                   onColor="#0d6efd"
                 />
               </Form.Group>
               <Form.Group controlId="formImage" className="mt-3">
                 <Form.Label>Image</Form.Label>
                 <input
+                  multiple
                   type="file"
+                  name="images"
                   className="form-control"
                   onChange={(event) => {
-                    setFieldValue('image', event.currentTarget.files[0]);
+                   const files = Array.from(event.currentTarget.files)
+                   const updatedFiles = values.images ? [...values.images, ...files] : files
+                   setFieldValue("images", updatedFiles)
                   }}
                 />
               </Form.Group>
-              <img src={values.image && URL.createObjectURL(values.image)}/>
+              {Array.isArray(values.images) && values.images.map((img,indexToRemove) => {
+                return (
+                    <div className="relative inline-block">
+                    <img src={URL.createObjectURL(img)} alt="preview" className="w-32 h-32 object-cover" />
+                    <button
+                      type="button"
+                      className="absolute top-0 right-0 mt-1 mr-1 text-white bg-red-500 rounded-full p-1 hover:bg-red-600 focus:outline-none"
+                      onClick={() => setFieldValue("images", values.images.filter((_,index) => index !== indexToRemove))} 
+                    >
+                      x
+                    </button>
+                  </div>
+                  
+                )
+                })}
               <Button variant="primary" type="submit" className="mt-4">
                 Submit
               </Button>
+              {console.log('🧛‍♂️', values.images)}
             </FormikForm>
           )}
         </Formik>
@@ -79,4 +103,4 @@ function CategoriesModal({ showModal, setShowModal }) {
   );
 }
 
-export default CategoriesModal;
+export default ProductsModal;
