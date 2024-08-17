@@ -11,10 +11,10 @@ const Products = lazy(()=>import("./components/Products/Products"))
 const Login = lazy(()=>import("./components/Login/Login"))
 
 const routes = [
-    {path: "/", element: Dashboard, layout: Auth, name: "Dashboard"},
-    {path: "/categories", element: Categories, layout: Auth, name: 'Categories'},
-    {path: "/products", element: Products, layout: Auth, name: 'Products'},
-    {path: "/login", element: Login, layout: UnAuth, name: 'Login'}
+    {showInSidebar: true, path: "/", element: Dashboard, layout: Auth, name: "Dashboard"},
+    {showInSidebar: true, path: "/categories", element: Categories, layout: Auth, name: 'Categories'},
+    {showInSidebar: true, path: "/products", element: Products, layout: Auth, name: 'Products'},
+    {showInSidebar: false, path: "/login", element: Login, layout: UnAuth, name: 'Login'}
 ]
 
 export default routes

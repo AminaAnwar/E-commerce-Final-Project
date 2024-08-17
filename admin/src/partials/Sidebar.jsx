@@ -122,6 +122,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
             </h3>
             <ul className="mt-3 space-y-2">
               {routes.map((route, index) => (
+                route.showInSidebar && 
                 <li key={index}>
                   <NavLink
                     to={route.path}
