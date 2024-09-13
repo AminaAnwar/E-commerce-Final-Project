@@ -27,17 +27,16 @@ exports.register = async(req,res) => {
 exports.login = async(req,res) => {
     try {
     const payload = req.body
-    console.log(payload)
     const existingAdmin = await adminModel.findOne({email: payload.email})
 
     if(!existingAdmin) {
-        return res.send({status: false, messgae: "Invalid Credentials"})
+        return res.send({status: false, message: "Invalid Credentials"})
     }
 
     const isPasswordMatched = await bcrypt.compare(payload.password, existingAdmin.password)
 
     if(!isPasswordMatched) {
-        return res.send({status: false, messgae: "Invalid Credentials"})
+        return res.send({status: false, message: "Invalid Credentials"})
     }
 
     const token = jwt.sign({id: existingAdmin._id}, secretKey, { expiresIn: '12h' })

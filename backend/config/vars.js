@@ -6,5 +6,5 @@ module.exports = {
     mongoURI: process.env.MONGO_URI,
     saltRounds: process.env.SALT_ROUNDS,
     secretKey: process.env.JWT_SECRET_KEY,
-    bypassRoutes: ['login', 'signup']
+    bypassRoutes: ['login', 'register']
 }

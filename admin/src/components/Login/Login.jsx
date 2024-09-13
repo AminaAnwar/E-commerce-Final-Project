@@ -1,25 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Button } from 'react-bootstrap';
+import {login} from "./login.action"
+import {useNavigate} from "react-router-dom"
+import {useDispatch,useSelector} from "react-redux"
+import { ENV } from '../../config/config';
+import { setErrors } from '../../redux/Shared/error.action';
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters'),
+});
+
+const initialValues = {
+  email: '',
+  password: '',
+};
+
 
 const Login = () => {
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required'),
-    password: Yup.string()
-      .required('Password is required')
-      .min(8, 'Password must be at least 8 characters'),
-  });
 
-  const initialValues = {
-    email: '',
-    password: '',
-  };
+  const  dispatch = useDispatch()
+  const  navigate = useNavigate()
+  const {loginData} = useSelector(state => state.auth)
+  const {error} = useSelector(state => state.error)
 
-  const onSubmit = (values) => {
-    console.log('Form data', values);
+
+  useEffect(()=> {
+    if(loginData?.data) {
+      ENV.storeAdminData(loginData.data)
+      navigate("/")
+    }
+  }, [loginData])
+
+    useEffect(()=> {
+      if(error) {
+        ENV.showAlert("Oops",error, "warning", false, "OK"  )
+        dispatch(setErrors(null))
+      }
+    }, [error])
+
+
+  const onSubmit = (values, {setSubmitting}) => {
+    dispatch(login(values))
+    .finally(()=> {
+      setSubmitting(false)
+    })
+    
   };
 
   return (
@@ -30,7 +62,7 @@ const Login = () => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {() => (
+          {({isSubmitting}) => (
             <FormikForm className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
               <div className="mb-4">
                 <label
@@ -73,7 +105,7 @@ const Login = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <Button variant="primary" type="submit" className="w-full">
+                <Button variant="primary" type="submit" className="w-full" disabled={isSubmitting}>
                   Login
                 </Button>
               </div>

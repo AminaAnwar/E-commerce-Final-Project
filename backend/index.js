@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require("cors")
 const {port} = require("./config/vars")
 const {connectDB} = require("./config/database")
 const adminRoutes = require("./routes/admin/index")
@@ -8,6 +9,7 @@ const app = express()
 // db connection
 connectDB()
 
+app.use(cors())
 app.use(express.json())
 app.use(authorize)
 

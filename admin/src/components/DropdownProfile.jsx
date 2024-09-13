@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Transition from '../utils/Transition';
+import {useNavigate} from "react-router-dom"
+import {useDispatch} from "react-redux"
 
 import UserAvatar from '../images/user-avatar-32.png';
+import { LOGIN } from '../redux/types';
 
 function DropdownProfile({
   align
@@ -12,6 +15,18 @@ function DropdownProfile({
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
+
+  const  dispatch = useDispatch()
+  const  navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.clear()
+    dispatch({
+      type: LOGIN,
+      payload: null
+    })
+    navigate("/login")
+  }
 
   // close on click outside
   useEffect(() => {
@@ -84,8 +99,7 @@ function DropdownProfile({
             <li>
               <Link
                 className="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3"
-                to="/signin"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => handleLogout()}
               >
                 Sign Out
               </Link>

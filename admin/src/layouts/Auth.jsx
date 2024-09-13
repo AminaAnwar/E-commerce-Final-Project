@@ -3,10 +3,17 @@ import React, { useState } from 'react';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Banner from '../partials/Banner';
+import { Navigate } from 'react-router-dom';
 
 function Auth({children}) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const token = localStorage.getItem("token")
+
+  if(!token) {
+    return <Navigate to="/login"/>
+  }
+
 
   return (
     <div className="flex h-screen overflow-hidden">
