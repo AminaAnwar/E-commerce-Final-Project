@@ -3,12 +3,29 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik, Field, Form as FormikForm } from 'formik';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import {CKEditor} from "@ckeditor/ckeditor5-react"
+import {useDispatch,useSelector} from "react-redux"
+import  {addProduct} from "./product.action"
 
 
 
 import Switch from 'react-switch';
 
 function ProductsModal({ showModal, setShowModal }) {
+  const  dispatch = useDispatch()
+
+  const handleSubmit = (values) => {
+    const formdata = new FormData()
+    Object.keys(values).forEach((key)=> {
+      if(key === "images") {
+        values.images.forEach((image)=> {
+            formdata.append('images', image)
+        })
+      } else {
+        formdata.append(key, values[key])
+      }
+    })
+    dispatch(addProduct(formdata))
+  }
 
   return (
     <Modal show={showModal} onHide={()=>setShowModal(false)}>
@@ -24,9 +41,7 @@ function ProductsModal({ showModal, setShowModal }) {
             images: null,
             featured: false,
           }}
-          onSubmit={(values) => {           
-            setShowModal(false)
-          }}
+          onSubmit={handleSubmit}
         >
           {({ setFieldValue,values }) => (
             <FormikForm>

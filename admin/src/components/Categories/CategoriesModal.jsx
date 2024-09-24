@@ -3,14 +3,24 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik, Field, Form as FormikForm } from 'formik';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import {CKEditor} from "@ckeditor/ckeditor5-react"
+import {useDispatch,useSelector} from "react-redux"
+import { addCategory } from './category.action';
 
 
 
 import Switch from 'react-switch';
 
 function CategoriesModal({ showModal, setShowModal }) {
- 
+  const  dispatch = useDispatch()
 
+  const handleSubmit = (values) => {
+    const formdata = new FormData()
+    Object.keys(values).forEach((key)=> {
+      formdata.append(key, values[key])
+    })
+    dispatch(addCategory(formdata))
+  }
+ 
   return (
     <Modal show={showModal} onHide={()=>setShowModal(false)}>
       <Modal.Header closeButton>
@@ -24,11 +34,7 @@ function CategoriesModal({ showModal, setShowModal }) {
             image: null,
             status: false,
           }}
-          onSubmit={(values) => {
-            console.log(values, "Values")
-           
-            setShowModal(false)
-          }}
+          onSubmit={handleSubmit}
         >
           {({ setFieldValue,values }) => (
             <FormikForm>

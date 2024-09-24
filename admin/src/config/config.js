@@ -9,5 +9,6 @@ export const ENV = {
     },
     showAlert: (title, text, icon, showCancelButton, confirmButtonText, cancelButtonText) => {
        return Swal.fire({ title, text, icon, showCancelButton, confirmButtonText, cancelButtonText })
-    }
+    },
+    token: localStorage.getItem('token')
 }
