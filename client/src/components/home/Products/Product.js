@@ -30,10 +30,7 @@ const Product = (props) => {
     <div className="w-full relative group">
       <div className="max-w-80 max-h-80 relative overflow-y-hidden ">
         <div>
-          <Image className="w-full h-full" imgSrc={props.img} />
-        </div>
-        <div className="absolute top-6 left-8">
-          {props.badge && <Badge text="New" />}
+          <Image className="w-full h-full" imgSrc={`http://localhost:8081/${props.img}`} />
         </div>
         <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
           <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
