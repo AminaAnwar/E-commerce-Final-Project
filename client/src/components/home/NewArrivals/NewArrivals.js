@@ -54,7 +54,7 @@ const NewArrivals = ({ newArrivals }) => {
           <div className="px-2">
             <Product
               _id={product._id}
-              img={product.images[0]}
+              img={product.images}
               productName={product.title}
               price={product.price}
               des={product.description}
