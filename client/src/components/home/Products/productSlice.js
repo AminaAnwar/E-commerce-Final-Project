@@ -5,6 +5,20 @@ export const fetchHomePageData = createAsyncThunk('fetchHomePageData', async() =
     return response.json()
 })
 
+export const addToGuestWishList = (productId) => {
+        let guestWishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
+        if (!guestWishlist.includes(productId)) {
+          guestWishlist.push(productId);
+          localStorage.setItem('guestWishlist', JSON.stringify(guestWishlist));
+        }
+}
+
+export const removeFromGuestWishList = (productId) => {
+    let guestWishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
+    guestWishlist = guestWishlist.filter(item => item !== productId)
+    localStorage.setItem('guestWishlist', JSON.stringify(guestWishlist));
+}
+
 
 const productsSlice = createSlice({
     name: "product", 
