@@ -58,6 +58,7 @@ const NewArrivals = ({ newArrivals }) => {
               productName={product.title}
               price={product.price}
               des={product.description}
+              category={product.categoryName}
             />
           </div>
         ))}
