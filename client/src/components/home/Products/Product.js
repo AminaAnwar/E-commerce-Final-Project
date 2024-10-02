@@ -34,10 +34,10 @@ const Product = (props) => {
 
   useEffect(() => {
     const List = isAuthenticated 
-      ? wishList?.wishlist?.products || [] 
+      ? wishList?.wishlist.map(item => item._id) || [] 
       : JSON.parse(localStorage.getItem('guestWishlist')) || [];
   
-    if (List.includes(productItem._id)) {
+    if (List.includes(productItem._id)) { 
       setIsFav(true);
     }
   }, [isAuthenticated, wishList, productItem._id]);

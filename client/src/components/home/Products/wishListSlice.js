@@ -47,6 +47,17 @@ export const fetchWishList = createAsyncThunk('product/fetchWishList', async() =
     return response.json()
 })
 
+export const fetchGuestWishList = createAsyncThunk('product/fetchGuestWishList', async(productIds) => {
+    const response = await fetch(`http://localhost:8081/api/front/wishlist/guest-wishlist`, {
+        method: "POST",
+        body: JSON.stringify(productIds),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    return response.json()
+})
+
 
 const wishlistSlice = createSlice({
     name: "product", 
@@ -64,6 +75,9 @@ const wishlistSlice = createSlice({
                 state.wishList = action.payload
             })
             .addCase(fetchWishList.fulfilled, (state,action) => {
+                state.wishList = action.payload
+            })
+            .addCase(fetchGuestWishList.fulfilled, (state,action) => {
                 state.wishList = action.payload
             })
     }
