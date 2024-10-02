@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
-
 export const signup = createAsyncThunk('signup', async (data) => {
     const response = await fetch('http://localhost:8081/api/front/auth/signup', {
         method: "POST",
@@ -53,6 +52,7 @@ const userSlice = createSlice({
             .addCase(signin.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.userData = action.payload;
+                localStorage.setItem("token", action.payload?.token)
             })
             .addCase(signin.rejected, (state, action) => {
                 state.isLoading = false;

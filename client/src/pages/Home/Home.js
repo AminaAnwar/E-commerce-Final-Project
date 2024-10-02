@@ -8,6 +8,7 @@ import SpecialOffers from "../../components/home/SpecialOffers/SpecialOffers";
 import YearProduct from "../../components/home/YearProduct/YearProduct";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHomePageData } from "../../components/home/Products/productSlice";
+import {fetchWishList} from "../../components/home/Products/wishListSlice"
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Home = () => {
   
   useEffect(()=> {
     dispatch(fetchHomePageData())
+    dispatch(fetchWishList())
   }, [])
 
   
@@ -24,8 +26,8 @@ const Home = () => {
       <BannerBottom />
       <div className="max-w-container mx-auto px-4">
         <Sale />
-        <NewArrivals newArrivals={homePageData?.data.NewArrivals}/>
-        <BestSellers featuredProducts={homePageData?.data.featuredProducts}/>
+        <NewArrivals newArrivals={homePageData?.data?.NewArrivals}/>
+        <BestSellers featuredProducts={homePageData?.data?.featuredProducts}/>
         <YearProduct />
         <SpecialOffers />
       </div>

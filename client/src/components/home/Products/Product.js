@@ -6,12 +6,14 @@ import { MdOutlineLabelImportant } from "react-icons/md";
 import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../redux/orebiSlice";
-import { addToGuestWishList, removeFromGuestWishList } from "./productSlice";
+import { addToGuestWishList, removeFromGuestWishList,removeFromWishList,addToWishList } from "./wishListSlice";
 
 const Product = (props) => {
+  const isAuthenticated = localStorage.getItem('token') || null
   const dispatch = useDispatch();
+  const {wishList} = useSelector(state => state.wishlist)
   const [isFav, setIsFav] = useState(false)
 
   const _id = props.productName;
@@ -31,17 +33,21 @@ const Product = (props) => {
   };
 
   useEffect(() => {
-    let guestWishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
-    if (guestWishlist.includes(productItem._id)) {
-      setIsFav(true)
+    const List = isAuthenticated 
+      ? wishList?.wishlist?.products || [] 
+      : JSON.parse(localStorage.getItem('guestWishlist')) || [];
+  
+    if (List.includes(productItem._id)) {
+      setIsFav(true);
     }
-  }, [])
+  }, [isAuthenticated, wishList, productItem._id]);
+  
 
   const toggleWishlist = () => {
     if (isFav) {
-      removeFromGuestWishList(productItem._id);
+      isAuthenticated ? dispatch(removeFromWishList(productItem._id)) : removeFromGuestWishList(productItem._id);
     } else {
-      addToGuestWishList(productItem._id);
+      isAuthenticated ? dispatch(addToWishList(productItem._id)) : addToGuestWishList(productItem._id);
     }
     setIsFav(!isFav);  
   };

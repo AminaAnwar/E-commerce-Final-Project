@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
 import { signin } from "./userSlice"
 import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 
 // Yup validation schema
 const SignInSchema = Yup.object().shape({
@@ -17,7 +17,17 @@ const SignInSchema = Yup.object().shape({
 const SignIn = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { userData } = useSelector(state => state.user)
+
+  useEffect(()=> {
+    if(userData?.status) {
+      navigate("/")
+    }
+    else {
+      alert("Something went wrong!")
+    }
+  }, [userData])
 
   return (
     <div className="w-full h-screen flex items-center justify-center">

@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
 import { signup } from "./userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // Yup validation schema
 const SignupSchema = Yup.object().shape({
@@ -13,7 +14,7 @@ const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Enter a valid email").required("Enter your email"),
   phoneNumber: Yup.string().required("Enter your phoneNumber number"),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
+    .min(10, "Password must be at least 10 characters")
     .required("Create a password"),
   address: Yup.string().required("Enter your address"),
   city: Yup.string().required("Enter your city name"),
@@ -25,6 +26,17 @@ const SignupSchema = Yup.object().shape({
 const SignUp = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {userData} = useSelector(state => state.user)
+
+  useEffect(()=> {
+    if(userData?.status) {
+      navigate("/signin")
+    }
+    else {
+      alert("Something went wrong!")
+    }
+  }, [userData])
 
   return (
     <div className="w-full h-screen flex items-center justify-start">

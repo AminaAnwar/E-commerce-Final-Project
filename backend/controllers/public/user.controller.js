@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../../models /user.model"); 
 
-const JWT_SECRET = process.env.JWT_SECRET || 'secretkey';
+const JWT_SECRET = process.env.JWT_SECRET_KEY || 'ssshhh';
 
 const signup = async (req, res) => {
   try {
@@ -31,10 +31,10 @@ const signup = async (req, res) => {
 
     await user.save();
 
-    return res.status(201).json({ message: 'User created successfully', user });
+    return res.status(201).json({ message: 'User created successfully', user, status: true });
   } catch (error) {
     console.error('Error during signup:', error);
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: "Something went wrong", error: error.message, status: false });
   }
 };
 
