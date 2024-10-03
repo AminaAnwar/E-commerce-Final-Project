@@ -6,7 +6,7 @@ const {addToWishlist, removeFromWishlist, fetchWishListItems, fetchGuestWishList
 router.post("/add", addToWishlist)
 router.post("/remove", removeFromWishlist)
 router.get("/list", fetchWishListItems)
-router.post("/guest-wishlist", fetchGuestWishList)
+router.post("/guestwishlist", fetchGuestWishList)
 
 
 module.exports = router

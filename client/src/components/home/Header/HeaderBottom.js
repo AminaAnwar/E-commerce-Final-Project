@@ -4,14 +4,18 @@ import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { paginationItems } from "../../../constants";
+import { fetchCategories } from "./categorySlice"
 
 const HeaderBottom = () => {
   const products = useSelector((state) => state.orebiReducer.products);
+  const { categories } = useSelector((state) => state.categories.categoriesList || []);
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   const ref = useRef();
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
@@ -30,6 +34,10 @@ const HeaderBottom = () => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  useEffect(() => {
+    dispatch(fetchCategories())
+  }, [dispatch])
 
   useEffect(() => {
     const filtered = paginationItems.filter((item) =>
@@ -57,24 +65,27 @@ const HeaderBottom = () => {
                 transition={{ duration: 0.5 }}
                 className="absolute top-36 z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-6"
               >
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Accessories
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Furniture
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Electronics
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Clothes
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Bags
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Home appliances
-                </li>
+            
+                {categories && categories.length > 0 ? (
+                  <>
+                    {categories.map(cat => (
+                      <li onClick={()=>navigate('/shop', {state: {category: cat.title}})} className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                        {cat.title}
+                      </li>
+                    ))}
+                    <Link to="/shop">
+                    <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                      More
+                    </li>
+                    </Link>
+                  </>
+                ) : (
+                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                    No Categories Found
+                  </li>
+                )}
+
+
               </motion.ul>
             )}
           </div>
@@ -156,9 +167,9 @@ const HeaderBottom = () => {
                   Profile
                 </li>
                 <Link to="/wishlist">
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Wishlist
-                </li>
+                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                    Wishlist
+                  </li>
                 </Link>
               </motion.ul>
             )}

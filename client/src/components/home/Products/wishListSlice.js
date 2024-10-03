@@ -48,7 +48,7 @@ export const fetchWishList = createAsyncThunk('product/fetchWishList', async() =
 })
 
 export const fetchGuestWishList = createAsyncThunk('product/fetchGuestWishList', async(productIds) => {
-    const response = await fetch(`http://localhost:8081/api/front/wishlist/guest-wishlist`, {
+    const response = await fetch(`http://localhost:8081/api/front/wishlist/guestwishlist`, {
         method: "POST",
         body: JSON.stringify(productIds),
         headers: {

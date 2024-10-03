@@ -14,6 +14,7 @@ import orebiReducer from "./orebiSlice";
 import productReducer from "../components/home/Products/productSlice"
 import userReducer from "../pages/Account/userSlice"
 import wishlistReducer from "../components/home/Products/wishListSlice"
+import categoriesReducer from "../components/home/Header/categorySlice"
 
 const persistConfig = {
   key: "root",
@@ -29,6 +30,7 @@ export const store = configureStore({
     product: productReducer,
     user: userReducer,
     wishlist: wishlistReducer,
+    categories: categoriesReducer
    },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

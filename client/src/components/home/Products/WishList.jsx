@@ -17,8 +17,8 @@ function WishList() {
 
 
   return (
-    <div className="w-full pb-16">
-        {wishList?.wishlist?.map((product) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mdl:gap-4 lg:gap-10">
+    {wishList?.wishlist?.map((product) => (
           <div className="px-2">
             <Product
               _id={product._id}

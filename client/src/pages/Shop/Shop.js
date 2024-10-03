@@ -3,12 +3,14 @@ import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import Pagination from "../../components/pageProps/shopPage/Pagination";
 import ProductBanner from "../../components/pageProps/shopPage/ProductBanner";
 import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
+import { useLocation } from "react-router-dom";
 
 const Shop = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const itemsPerPageFromBanner = (itemsPerPage) => {
     setItemsPerPage(itemsPerPage);
   };
+  const location = useLocation()
 
   return (
     <div className="max-w-container mx-auto px-4">
