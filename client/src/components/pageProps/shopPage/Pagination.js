@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 import { paginationItems } from "../../../constants";
+import { getProductsList } from "../../home/Products/productSlice"
+import { useDispatch, useSelector } from "react-redux";
 
 const items = paginationItems;
+
+
+
 function Items({ currentItems }) {
   return (
     <>
@@ -25,7 +30,16 @@ function Items({ currentItems }) {
   );
 }
 
-const Pagination = ({ itemsPerPage }) => {
+const Pagination = ({ itemsPerPage, category }) => {
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    let query = {category}
+    dispatch(getProductsList(query))
+  }, [])
+
+
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);

@@ -42,3 +42,54 @@ exports.getHomePageData = async (req, res) => {
         return res.status(500).send({ status: false, message: "Something went wrong", error: error.message })
     }
 }
+
+exports.getProductsList = async (req, res) => {
+    try {
+        let { category } = req.query
+        let query = {}
+
+        if(category) {
+            query.categoryId = category
+        }
+
+        const products = await Product.aggregate([
+            {
+                $match: query
+            },
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "categoryId",
+                    foreignField: "_id",
+                    as: "categoryInfo"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$categoryInfo",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $addFields: {
+                    categoryName: "$categoryInfo.title"
+                }
+            },
+            {
+                $project: {
+                    categoryName: 1,
+                    title: 1,
+                    description: 1,
+                    images: 1,
+                    price: 1,
+                    featured: 1,
+                    categoryId: 1
+                }
+            }
+        ])
+
+        return res.status(200).send({ status: true, message: "Home Page Data Fetched Successfully", products})
+    } catch (error) {
+        return res.status(500).send({ status: false, message: "Something went wrong", error: error.message })
+    }
+}

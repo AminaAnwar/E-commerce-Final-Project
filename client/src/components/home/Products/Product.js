@@ -34,7 +34,7 @@ const Product = (props) => {
 
   useEffect(() => {
     const List = isAuthenticated 
-      ? wishList?.wishlist.map(item => item._id) || [] 
+      ? wishList?.wishlist?.map(item => item._id) || [] 
       : JSON.parse(localStorage.getItem('guestWishlist')) || [];
   
     if (List.includes(productItem._id)) { 

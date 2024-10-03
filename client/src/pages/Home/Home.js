@@ -13,10 +13,12 @@ import {fetchWishList} from "../../components/home/Products/wishListSlice"
 const Home = () => {
   const dispatch = useDispatch();
   const {homePageData} = useSelector(state => state.product)
+  const isAuthenticated = localStorage.getItem('token') || null
+
   
   useEffect(()=> {
     dispatch(fetchHomePageData())
-    dispatch(fetchWishList())
+    isAuthenticated && dispatch(fetchWishList())
   }, [])
 
   

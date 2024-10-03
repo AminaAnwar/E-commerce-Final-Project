@@ -69,7 +69,7 @@ const HeaderBottom = () => {
                 {categories && categories.length > 0 ? (
                   <>
                     {categories.map(cat => (
-                      <li onClick={()=>navigate('/shop', {state: {category: cat.title}})} className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                      <li onClick={()=>navigate('/shop', {state: {category: cat._id}})} className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                         {cat.title}
                       </li>
                     ))}
