@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 import { paginationItems } from "../../../constants";
-import { getProductsList } from "../../home/Products/productSlice"
-import { useDispatch, useSelector } from "react-redux";
 
 const items = paginationItems;
 
@@ -12,8 +10,8 @@ const items = paginationItems;
 function Items({ currentItems }) {
   return (
     <>
-      {currentItems &&
-        currentItems.map((item) => (
+      {currentItems?.length > 0 &&
+        currentItems?.map((item) => (
           <div key={item._id} className="w-full">
             <Product
               _id={item._id}
@@ -30,15 +28,7 @@ function Items({ currentItems }) {
   );
 }
 
-const Pagination = ({ itemsPerPage, category }) => {
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    let query = {category}
-    dispatch(getProductsList(query))
-  }, [])
-
+const Pagination = ({ itemsPerPage, products }) => {
 
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
@@ -66,7 +56,7 @@ const Pagination = ({ itemsPerPage, category }) => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mdl:gap-4 lg:gap-10">
-        <Items currentItems={currentItems} />
+        <Items currentItems={products} />
       </div>
       <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center">
         <ReactPaginate

@@ -1,4 +1,5 @@
 const Product = require("../../models /product.model")
+const ObjectId = require("mongoose").Types.ObjectId
 
 exports.getHomePageData = async (req, res) => {
     try {
@@ -45,11 +46,11 @@ exports.getHomePageData = async (req, res) => {
 
 exports.getProductsList = async (req, res) => {
     try {
-        let { category } = req.query
+        let { categoryId } = req.query
         let query = {}
 
-        if(category) {
-            query.categoryId = category
+        if(categoryId) {
+            query.categoryId = new ObjectId(categoryId)
         }
 
         const products = await Product.aggregate([

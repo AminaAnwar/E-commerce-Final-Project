@@ -6,19 +6,27 @@ export const fetchHomePageData = createAsyncThunk('fetchHomePageData', async() =
 })
 
 export const getProductsList = createAsyncThunk('getProductsList', async(query) => {
-    console.log(query)
 
-    let {category} = query
-    const params = new URLSearchParams()
-    params.append('key', test)
-    if(category) {
-        params.append('categoryId', category)
+    let {categoryId,maxPrice,minPrice} = query
+    let params = new URLSearchParams()
+
+    if(categoryId) {
+        params.append('categoryId', categoryId)
+    }
+    if(maxPrice) {
+        params.append('maxPrice', maxPrice)
+    }
+    if(minPrice) {
+        params.append('minPrice', minPrice)
+    }
+    
+    params = params.toString()
+    let url = 'http://localhost:8081/api/front/product/getProducts'
+    if(params) {
+        url = `http://localhost:8081/api/front/product/getProducts?${params}`
     }
 
-    console.log(params.toString(), "params")
-
-
-    const response = await fetch('http://localhost:8081/api/front/product/getProducts')
+    const response = await fetch(url)
     return response.json()
 })
 

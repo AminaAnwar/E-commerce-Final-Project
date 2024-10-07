@@ -32,7 +32,7 @@ const Category = () => {
   return (
     <div className="w-full">
       <NavTitle title="Shop by Category" icons={false} />
-      <div>
+      <div className="max-h-48 overflow-y-auto">
         <ul className="flex flex-col gap-4 text-sm lg:text-base text-[#767676]">
           {items.map(({ _id, title, icons }) => (
             <li

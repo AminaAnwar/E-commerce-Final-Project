@@ -1,16 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import Pagination from "../../components/pageProps/shopPage/Pagination";
 import ProductBanner from "../../components/pageProps/shopPage/ProductBanner";
 import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
 import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {getProductsList} from "../../components/home/Products/productSlice"
 
 const Shop = () => {
+  const location = useLocation()
+  const dispatch = useDispatch();
+
+
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const {products} = useSelector(state => state.product)
+
+
+  const [filters,setFilters] = useState({
+    categoryId: location?.state?.category || '',
+    minPrice: '',
+    maxPrice: ''
+  })
+
+  useEffect(()=> {
+    dispatch(getProductsList(filters))
+  },[filters])
+
+
   const itemsPerPageFromBanner = (itemsPerPage) => {
     setItemsPerPage(itemsPerPage);
   };
-  const location = useLocation()
 
   return (
     <div className="max-w-container mx-auto px-4">
@@ -22,7 +41,7 @@ const Shop = () => {
         </div>
         <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">
           <ProductBanner itemsPerPageFromBanner={itemsPerPageFromBanner} />
-          <Pagination itemsPerPage={itemsPerPage} category={location.state ? location.state.category : ""}/>
+          <Pagination itemsPerPage={itemsPerPage} products={products}/>
         </div>
       </div>
       {/* ================= Products End here ===================== */}
