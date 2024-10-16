@@ -22,7 +22,8 @@ exports.authorize = (req,res,next) => {
 
             else {
                 const decodedToken = jwt.verify(token, secretKey)
-                req.user = decodedToken._id
+                console.log(decodedToken, "decodedToken")
+                req.user = decodedToken.id
                 next()
             }
 
