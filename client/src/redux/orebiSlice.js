@@ -1,9 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   userInfo: [],
   products: [],
 };
+
+export const fetchCartList = createAsyncThunk('product/fetchCartList', async() => {
+  const response = await fetch(`http://localhost:8081/api/front/cart/list`, {
+      headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+  })
+  return response.json()
+})
 
 export const orebiSlice = createSlice({
   name: "orebi",
@@ -46,6 +55,12 @@ export const orebiSlice = createSlice({
       state.products = [];
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase('fetchCartList', (state, action) => {
+        console.log(action.payload, "Received Products")
+      })
+  }
 });
 
 export const {
