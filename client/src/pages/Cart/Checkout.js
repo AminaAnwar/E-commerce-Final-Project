@@ -4,7 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import ItemCard from "./ItemCard"
-import {placeOrder, resetState} from "../../redux/orebiSlice"
+import {placeOrder, resetState, payNow} from "../../redux/orebiSlice"
+import {loadStripe} from '@stripe/stripe-js';
+
 
 const Checkout = () => {
     const dispatch = useDispatch();
@@ -52,6 +54,14 @@ const Checkout = () => {
 
     },[order])
 
+    const handlePayment = async (body) => {
+        const stripe = await loadStripe('pk_test_51PHiqzHnj96w7CwAFLmMKt489FoXoRznv70qE35fxhp5UbSLjbtD1MRZ0HqErIVbSqOUzbHk9Hmi694IOjXf1g7O00FTui3ELZ');
+        const response = await payNow(body)
+        const result = stripe.redirectToCheckout({
+        sessionId: response.session.id
+        })
+    }
+
     const handleSubmit = (values) => {
        let body = {
             orderItems: products,
@@ -64,7 +74,7 @@ const Checkout = () => {
             shippingPrice: shippingCharge,
             totalPrice: totalAmt
        }
-       dispatch(placeOrder(body))
+       values.paymentMethod === "COD" ? dispatch(placeOrder(body)) : handlePayment(body)
     };
 
     return (
