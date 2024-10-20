@@ -24,6 +24,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
 import WishList from "./components/home/Products/WishList";
 import Checkout from "./pages/Cart/Checkout";
+import OrderConfirmation from "./pages/Cart/OrderConfirmation";
 
 const Layout = () => {
   return (
@@ -51,8 +52,9 @@ const router = createBrowserRouter(
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/cart" element={<Cart />}></Route> 
         <Route path="/checkout" element={<Checkout />}></Route>
+        <Route path="/order-confirmed" element={<OrderConfirmation />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
         <Route path="/wishlist" element={<WishList />}></Route>
       </Route>

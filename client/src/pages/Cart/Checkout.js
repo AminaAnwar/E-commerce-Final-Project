@@ -2,13 +2,17 @@ import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ItemCard from "./ItemCard"
+import {placeOrder, resetState} from "../../redux/orebiSlice"
 
 const Checkout = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [totalAmt, setTotalAmt] = useState("");
+    const [shippingCharge, setShippingCharge] = useState(200);
     const products = useSelector((state) => state.orebiReducer.products);
+    const order = useSelector(state => state.orebiReducer.order)
 
     useEffect(() => {
         let price = 0;
@@ -40,8 +44,27 @@ const Checkout = () => {
         phone: Yup.string().required('Required'),
     });
 
+    useEffect(()=> {
+        if(order?.status) {
+            navigate("/order-confirmed", { state: { order: order.data } });
+            dispatch(resetState())
+        }
+
+    },[order])
+
     const handleSubmit = (values) => {
-        console.log('Checkout form values:', values);
+       let body = {
+            orderItems: products,
+            shippingAddress: {
+                    address: values.address,
+                    city:values.city,
+                    postalCode: values.postalCode,
+            },
+            paymentMethod: values.paymentMethod,
+            shippingPrice: shippingCharge,
+            totalPrice: totalAmt
+       }
+       dispatch(placeOrder(body))
     };
 
     return (

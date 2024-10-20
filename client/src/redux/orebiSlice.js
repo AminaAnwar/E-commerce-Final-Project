@@ -3,6 +3,7 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   userInfo: [],
   products: [],
+  order: null
 };
 
 export const fetchCartList = createAsyncThunk('product/fetchCartList', async() => {
@@ -13,6 +14,18 @@ export const fetchCartList = createAsyncThunk('product/fetchCartList', async() =
   })
   return response.json()
 })
+
+export const placeOrder = createAsyncThunk('product/placeOrder', async(body) => {
+  const response = await fetch(`http://localhost:8081/api/front/order/placeOrder`, {
+      method: "POST",
+      headers: {
+          'Content-Type': "application/json"
+      },
+      body: JSON.stringify(body)
+  })
+  return response.json()
+})
+
 
 export const orebiSlice = createSlice({
   name: "orebi",
@@ -54,11 +67,18 @@ export const orebiSlice = createSlice({
     resetCart: (state) => {
       state.products = [];
     },
+    resetState: (state) => {
+      state.userInfo = [];
+      state.products = [];
+      state.order = null;
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase('fetchCartList', (state, action) => {
-        console.log(action.payload, "Received Products")
+      })
+      .addCase(placeOrder.fulfilled, (state,action)=> {
+        state.order = action.payload
       })
   }
 });
@@ -68,6 +88,7 @@ export const {
   increaseQuantity,
   drecreaseQuantity,
   deleteItem,
+  resetState,
   resetCart,
 } = orebiSlice.actions;
 export default orebiSlice.reducer;
