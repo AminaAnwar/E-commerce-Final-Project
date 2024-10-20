@@ -89,7 +89,7 @@ exports.getProductsList = async (req, res) => {
             }
         ])
 
-        return res.status(200).send({ status: true, message: "Home Page Data Fetched Successfully", products})
+        return res.status(200).send({ status: true, message: "Products List Fetched Successfully", products})
     } catch (error) {
         return res.status(500).send({ status: false, message: "Something went wrong", error: error.message })
     }

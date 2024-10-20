@@ -15,12 +15,10 @@ function Items({ currentItems }) {
           <div key={item._id} className="w-full">
             <Product
               _id={item._id}
-              img={item.img}
-              productName={item.productName}
+              img={item.images}
+              productName={item.title}
               price={item.price}
-              color={item.color}
-              badge={item.badge}
-              des={item.des}
+              des={item.description}
             />
           </div>
         ))}
