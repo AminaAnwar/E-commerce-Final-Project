@@ -58,7 +58,7 @@ const Checkout = () => {
         const stripe = await loadStripe('pk_test_51PHiqzHnj96w7CwAFLmMKt489FoXoRznv70qE35fxhp5UbSLjbtD1MRZ0HqErIVbSqOUzbHk9Hmi694IOjXf1g7O00FTui3ELZ');
         const response = await payNow(body)
         const result = stripe.redirectToCheckout({
-        sessionId: response.session.id
+        sessionId: response?.session?.id
         })
     }
 
