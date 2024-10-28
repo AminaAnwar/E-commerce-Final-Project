@@ -1,12 +1,20 @@
 const mongoose = require("mongoose")
 const Product = require("../../models /product.model")
+const {uploadImageToCloudinary} = require("../../config/cloudinary")
+
 
 exports.create = async (req, res) => {
     try {
         const payload = req.body
         const files = req.files
         payload.images = files.map(file => file.filename)
-
+        payload.cloudinaryURLs = await Promise.all(
+            files.map(async (file) => {
+              const result = await uploadImageToCloudinary(file.path);
+              return result.secure_url; 
+            })
+          );
+          
         const product = await Product.create(payload)
         return res.status(200).send({ message: "Product Created Successfully", data: product })
 

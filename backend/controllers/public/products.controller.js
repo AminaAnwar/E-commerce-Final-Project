@@ -32,7 +32,8 @@ exports.getHomePageData = async (req, res) => {
                     images: 1,
                     price: 1,
                     featured: 1,
-                    categoryId: 1
+                    categoryId: 1,
+                    cloudinaryURLs: 1
                 }
             }
         ])
@@ -84,7 +85,8 @@ exports.getProductsList = async (req, res) => {
                     images: 1,
                     price: 1,
                     featured: 1,
-                    categoryId: 1
+                    categoryId: 1, 
+                    cloudinaryURLs:1
                 }
             }
         ])

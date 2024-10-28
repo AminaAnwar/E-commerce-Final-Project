@@ -28,6 +28,7 @@ const pay = async (req, res) => {
             currency: "usd",
             product_data: {
               name: item.name,
+              images: [item.cloudinaryUrl[0]]
             },
             unit_amount: item.price * 100,
           },

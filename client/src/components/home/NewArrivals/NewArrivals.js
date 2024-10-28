@@ -59,6 +59,7 @@ const NewArrivals = ({ newArrivals }) => {
               price={product.price}
               des={product.description}
               category={product.categoryName}
+              cloudinaryimg={product.cloudinaryURLs}
             />
           </div>
         ))}

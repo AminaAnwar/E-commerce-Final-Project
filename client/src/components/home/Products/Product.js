@@ -77,6 +77,7 @@ const Product = (props) => {
                     badge: props.badge,
                     price: props.price,
                     colors: props.color,
+                    cloudinaryUrl: props.cloudinaryimg
                   })
                 )
               }

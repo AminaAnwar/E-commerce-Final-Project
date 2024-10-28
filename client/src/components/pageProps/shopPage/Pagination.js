@@ -8,6 +8,7 @@ const items = paginationItems;
 
 
 function Items({ currentItems }) {
+  console.log(currentItems, "current")
   return (
     <>
       {currentItems?.length > 0 &&
@@ -19,6 +20,7 @@ function Items({ currentItems }) {
               productName={item.title}
               price={item.price}
               des={item.description}
+              cloudinaryimg={item.cloudinaryURLs}
             />
           </div>
         ))}
