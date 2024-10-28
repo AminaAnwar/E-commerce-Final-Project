@@ -47,6 +47,7 @@ exports.getHomePageData = async (req, res) => {
 
 exports.getProductsList = async (req, res) => {
     try {
+        console.log("testing")
         let { categoryId } = req.query
         let query = {}
 
