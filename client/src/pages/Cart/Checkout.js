@@ -175,7 +175,7 @@ const Checkout = () => {
                                             <label>Cash on Delivery (COD)</label>
                                         </div>
                                         <div className="flex items-center gap-4 mt-2">
-                                            <Field type="radio" name="paymentMethod" value="card" className="mr-2" />
+                                            <Field type="radio" name="paymentMethod" value="Card" className="mr-2" />
                                             <label>Credit/Debit Card</label>
                                         </div>
                                     </div>
